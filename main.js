@@ -1,23 +1,25 @@
-import { expandGlobSync, ensureDirSync } from "https://deno.land/std@0.91.0/fs/mod.ts";
+import {
+  ensureDirSync,
+  expandGlobSync,
+} from "https://deno.land/std@0.91.0/fs/mod.ts";
+import { paramCase } from "https://deno.land/x/case/mod.ts";
 import { Marked } from "https://deno.land/x/markdown@v2.0.0/mod.ts";
-import { parse } from "https://deno.land/std@0.91.0/encoding/yaml.ts";
+
+const YAML_FRONTMATTER_REGEX =
+  /^(-{3}(?:\n|\r)([\w\W]+?)(?:\n|\r)-{3})?([\w\W]*)*/;
 
 // We create the output directory:
 ensureDirSync("./build");
 
-for (const file of expandGlobSync("**/*.md")) {
-  console.log(file);
+const inputFiles = expandGlobSync("**/*.md");
+for (const file of inputFiles) {
+  // Everything is synchronous, we read in the file:
+  const input = Deno.readTextFileSync(file.path);
+
+  // We write the file processed through markdown:
+  const markup = Marked.parse(input);
+  Deno.writeTextFileSync(
+    `./build/${paramCase(markup.meta.title)}.html`,
+    markup.content,
+  );
 }
-
-// Everything is synchronous, we read in the file:
-const input = Deno.readTextFileSync("./posts/1.md");
-
-const re = /^(-{3}(?:\n|\r)([\w\W]+?)(?:\n|\r)-{3})?([\w\W]*)*/
-const results = re.exec(input)
-const x = results[2]
-
-console.log(parse(x))
-
-// We write the file processed through markdown:
-const markup = Marked.parse(input);
-Deno.writeTextFileSync("./build/1.html", markup.content);

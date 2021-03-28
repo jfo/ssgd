@@ -1,7 +1,6 @@
 import { expandGlobSync, ensureDirSync } from "https://deno.land/std@0.91.0/fs/mod.ts";
 import { Marked } from "https://deno.land/x/markdown@v2.0.0/mod.ts";
 import { parse } from "https://deno.land/std@0.91.0/encoding/yaml.ts";
-import { assert } from "https://deno.land/std@0.91.0/testing/asserts.ts";
 
 // We create the output directory:
 ensureDirSync("./build");

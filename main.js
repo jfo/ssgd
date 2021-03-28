@@ -1,4 +1,4 @@
-import { ensureDirSync } from "https://deno.land/std@0.91.0/fs/mod.ts";
+import { expandGlobSync, ensureDirSync } from "https://deno.land/std@0.91.0/fs/mod.ts";
 import { Marked } from "https://deno.land/x/markdown@v2.0.0/mod.ts";
 import { parse } from "https://deno.land/std@0.91.0/encoding/yaml.ts";
 import { assert } from "https://deno.land/std@0.91.0/testing/asserts.ts";
@@ -6,7 +6,11 @@ import { assert } from "https://deno.land/std@0.91.0/testing/asserts.ts";
 // We create the output directory:
 ensureDirSync("./build");
 
-// Everything is syncronous, we read in the file:
+for (const file of expandGlobSync("**/*.md")) {
+  console.log(file);
+}
+
+// Everything is synchronous, we read in the file:
 const input = Deno.readTextFileSync("./posts/1.md");
 
 const re = /^(-{3}(?:\n|\r)([\w\W]+?)(?:\n|\r)-{3})?([\w\W]*)*/

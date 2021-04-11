@@ -5,9 +5,6 @@ import {
 import { paramCase } from "https://deno.land/x/case/mod.ts";
 import { Marked } from "https://deno.land/x/markdown@v2.0.0/mod.ts";
 
-const YAML_FRONTMATTER_REGEX =
-  /^(-{3}(?:\n|\r)([\w\W]+?)(?:\n|\r)-{3})?([\w\W]*)*/;
-
 // We create the output directory:
 ensureDirSync("./build");
 

@@ -1,14 +1,14 @@
 import {
   ensureDirSync,
   expandGlobSync,
-} from "https://deno.land/std@0.91.0/fs/mod.ts";
+} from "https://deno.land/std/fs/mod.ts";
 import { paramCase } from "https://deno.land/x/case/mod.ts";
-import { Marked } from "https://deno.land/x/markdown@v2.0.0/mod.ts";
+import { Marked } from "https://deno.land/x/markdown/mod.ts";
 
 // We create the output directory:
 ensureDirSync("./build");
 
-const inputFiles = expandGlobSync("**/*.md");
+const inputFiles = expandGlobSync("posts/*.md");
 for (const file of inputFiles) {
   // Everything is synchronous, we read in the file:
   const input = Deno.readTextFileSync(file.path);

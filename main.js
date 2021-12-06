@@ -8,7 +8,9 @@ import { Marked } from "https://deno.land/x/markdown/mod.ts";
 // We create the output directory:
 ensureDirSync("./build");
 
-const inputFiles = expandGlobSync("posts/*.md");
+// We recursively search for markdown files
+const inputFiles = expandGlobSync(`${Deno.cwd()}/**/*.md`);
+
 for (const file of inputFiles) {
   // Everything is synchronous, we read in the file:
   const input = Deno.readTextFileSync(file.path);

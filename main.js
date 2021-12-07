@@ -4,14 +4,14 @@ import { parse } from "https://deno.land/std/path/mod.ts";
 import { Marked } from "https://deno.land/x/markdown/mod.ts";
 import hljs from "https://dev.jspm.io/highlightjs";
 
-Marked.setOptions({
-  highlight: (code, lang) => hljs.highlight(lang, code).value,
-});
-
 const options = {
   outputDir: "build",
   sourceDir: "posts",
 };
+
+Marked.setOptions({
+  highlight: (code, lang) => hljs.highlight(lang, code).value,
+});
 
 ensureDirSync(options.outputDir);
 

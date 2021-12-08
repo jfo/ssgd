@@ -3,11 +3,12 @@ import { paramCase, normalCase } from "https://deno.land/x/case/mod.ts";
 import { parse } from "https://deno.land/std/path/mod.ts";
 import { Marked } from "https://deno.land/x/markdown/mod.ts";
 import hljs from "https://dev.jspm.io/highlightjs";
-import { render } from 'https://deno.land/x/mustache_ts/mustache.ts';
+import { render } from "https://deno.land/x/mustache_ts/mustache.ts";
 
 const options = {
   outputDir: "build",
   sourceDir: "posts",
+  staticDir: "static",
 };
 
 Marked.setOptions({
@@ -25,6 +26,11 @@ for (const file of inputFiles) {
 
   Deno.writeTextFileSync(
     `${options.outputDir}/${paramCase(title)}.html`,
-    render(markup.content, {})
+    render(rootTemplate, { content: render(markup.content, {}) })
   );
+}
+
+const staticFiles = expandGlobSync(`${options.staticDir}/**/*`);
+for (const file of staticFiles) {
+  Deno.copyFileSync(file.path, `${options.outputDir}/${file.name}`);
 }

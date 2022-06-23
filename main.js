@@ -4,16 +4,18 @@ import { parse } from "https://deno.land/std/path/mod.ts";
 import { Marked } from "https://deno.land/x/markdown/mod.ts";
 import hljs from "https://jspm.dev/highlight.js";
 import { render } from "https://deno.land/x/mustache_ts/mustache.ts";
+import { format } from "https://deno.land/std@0.91.0/datetime/mod.ts";
+
+import { copySync } from "https://deno.land/std@0.145.0/fs/copy.ts";
 
 const options = {
   outputDir: "build",
   sourceDir: "src",
   staticDir: "static",
-  rootTemplate: `{{{content}}}`,
+  rootTemplate: "templates/root_template.html",
 };
 
-
-const currentlyUnknownLanguages = ['zig', 'hex', 'wat', 'asm']
+const currentlyUnknownLanguages = ["zig", "hex", "wat", "asm"];
 Marked.setOptions({
   highlight: (code, language) => {
     if (!language || currentlyUnknownLanguages.includes(language)) {
@@ -31,15 +33,19 @@ const inputFiles = expandGlobSync(`${options.sourceDir}/**/*.md`);
 for (const file of inputFiles) {
   const input = Deno.readTextFileSync(file.path);
   const markup = Marked.parse(input);
+
   const title = markup?.meta?.title || parse(file.name).name;
+  let date = markup?.meta?.date || "1970-01-01";
+  date = new Date(date);
 
   Deno.writeTextFileSync(
     `${options.outputDir}/${paramCase(title)}.html`,
-    render(options.rootTemplate, { content: render(markup.content, {}) })
+    render(Deno.readTextFileSync(options.rootTemplate), {
+      content: render(markup.content, {}),
+      title,
+      date: format(date, "M-d-yyyy"),
+    })
   );
 }
 
-// const staticFiles = expandGlobSync(`${options.staticDir}/**/*`);
-// for (const file of staticFiles) {
-//   Deno.copyFileSync(file.path, `${options.outputDir}/${file.name}`);
-// }
+copySync(options.staticDir, options.outputDir, { overwrite: true });

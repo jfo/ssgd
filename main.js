@@ -13,6 +13,7 @@ const options = {
   staticDir: "static",
   rootTemplate: "templates/root_template.html",
   archiveTemplate: "templates/archive_template.html",
+  rssTemplate: "templates/rss_template.xml",
   css: "style.css",
   includeAnalytics: true,
   // assetHost: "https://assets.jfo.click",
@@ -32,7 +33,7 @@ Marked.setOptions({
 ensureDirSync(options.outputDir);
 
 const inputFiles = expandGlobSync(`${options.sourceDir}/**/*.md`);
-const posts = [];
+let posts = [];
 
 for (const file of inputFiles) {
   const input = Deno.readTextFileSync(file.path);
@@ -54,9 +55,9 @@ for (const file of inputFiles) {
   });
 }
 
-for (const { title, date, content, url } of posts
-  .sort((p) => p.date)
-  .reverse()) {
+posts = posts.sort((p) => p.date).reverse();
+
+for (const { title, date, content, url } of posts) {
   ensureDirSync(`${options.outputDir}/${url}`);
   Deno.writeTextFileSync(
     `${options.outputDir}/${url}/index.html`,
@@ -72,6 +73,14 @@ for (const { title, date, content, url } of posts
     })
   );
 }
+
+Deno.writeTextFileSync(
+  `${options.outputDir}/feed.xml`,
+  render(Deno.readTextFileSync(options.rssTemplate), {
+    items: posts.slice(0, 3),
+    now: new Date(),
+  })
+);
 
 Deno.writeTextFileSync(
   `${options.outputDir}/index.html`,

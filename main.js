@@ -44,20 +44,24 @@ for (const file of inputFiles) {
 
   posts.push({
     title,
-    date,
+    date: `${date.toLocaleString("default", {
+      month: "long",
+    })} ${date.getDate()}, ${date.getFullYear()}`,
     content: markup.content,
     url,
   });
 }
 
-for (const { title, date, content, url } of posts) {
+for (const { title, date, content, url } of posts
+  .sort((p) => p.date)
+  .reverse()) {
   ensureDirSync(`${options.outputDir}/${url}`);
   Deno.writeTextFileSync(
     `${options.outputDir}/${url}/index.html`,
     render(Deno.readTextFileSync(options.rootTemplate), {
       content: render(content, {}),
       title,
-      date: format(date, "M-d-yyyy"),
+      date,
       css: options.css,
     })
   );

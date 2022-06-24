@@ -17,6 +17,7 @@ const options = {
   css: "style.css",
   includeAnalytics: true,
   // assetHost: "https://assets.jfo.click",
+  // baseUrl: "https://jfo.github.io/pages_test",
 };
 
 const currentlyUnknownLanguages = ["zig", "hex", "wat", "asm"];
@@ -70,6 +71,7 @@ for (const { title, date, content, url } of posts) {
       date,
       css: options.css,
       includeAnalytics: options.includeAnalytics,
+      baseUrl: options.baseUrl,
     })
   );
 }
@@ -88,6 +90,7 @@ Deno.writeTextFileSync(
     written: posts,
     css: options.css,
     includeAnalytics: options.includeAnalytics,
+    baseUrl: options.baseUrl,
   })
 );
 

@@ -16,8 +16,8 @@ const options = {
   rssTemplate: "templates/rss_template.xml",
   css: "style.css",
   includeAnalytics: true,
-  // assetHost: "https://assets.jfo.click",
-  // baseUrl: "https://jfo.github.io/pages_test",
+  assetHost: "https://assets.jfo.click",
+  baseUrl: "https://blog.jfo.click",
 };
 
 const currentlyUnknownLanguages = ["zig", "hex", "wat", "asm"];

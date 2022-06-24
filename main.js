@@ -7,13 +7,13 @@ import { render } from "https://deno.land/x/mustache_ts/mustache.ts";
 import { format } from "https://deno.land/std@0.91.0/datetime/mod.ts";
 import { copySync } from "https://deno.land/std@0.145.0/fs/copy.ts";
 
-
 const options = {
   outputDir: "build",
   sourceDir: "src",
   staticDir: "static",
   rootTemplate: "templates/root_template.html",
   archiveTemplate: "templates/archive_template.html",
+  css: "style.css",
 };
 
 const currentlyUnknownLanguages = ["zig", "hex", "wat", "asm"];
@@ -46,7 +46,7 @@ for (const file of inputFiles) {
     title,
     date,
     content: markup.content,
-    url
+    url,
   });
 }
 
@@ -58,6 +58,7 @@ for (const { title, date, content, url } of posts) {
       content: render(content, {}),
       title,
       date: format(date, "M-d-yyyy"),
+      css: options.css,
     })
   );
 }
@@ -65,7 +66,8 @@ for (const { title, date, content, url } of posts) {
 Deno.writeTextFileSync(
   `${options.outputDir}/index.html`,
   render(Deno.readTextFileSync(options.archiveTemplate), {
-    written: posts
+    written: posts,
+    css: options.css,
   })
 );
 

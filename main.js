@@ -14,6 +14,7 @@ const options = {
   rootTemplate: "templates/root_template.html",
   archiveTemplate: "templates/archive_template.html",
   css: "style.css",
+  // assetHost: "https://assets.jfo.click",
 };
 
 const currentlyUnknownLanguages = ["zig", "hex", "wat", "asm"];
@@ -60,7 +61,7 @@ for (const { title, date, content, url } of posts
     `${options.outputDir}/${url}/index.html`,
     render(Deno.readTextFileSync(options.rootTemplate), {
       content: render(content, {
-        img: () => (text) => `<image src="/${text}" />`,
+        img: () => (text) => `<image src="${options.assetHost || ''}/${text}" />`,
       }),
       title,
       date,

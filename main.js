@@ -14,6 +14,7 @@ const options = {
   rootTemplate: "templates/root_template.html",
   archiveTemplate: "templates/archive_template.html",
   css: "style.css",
+  includeAnalytics: true,
   // assetHost: "https://assets.jfo.click",
 };
 
@@ -61,11 +62,13 @@ for (const { title, date, content, url } of posts
     `${options.outputDir}/${url}/index.html`,
     render(Deno.readTextFileSync(options.rootTemplate), {
       content: render(content, {
-        img: () => (text) => `<image src="${options.assetHost || ''}/${text}" />`,
+        img: () => (text) =>
+          `<image src="${options.assetHost || ""}/${text}" />`,
       }),
       title,
       date,
       css: options.css,
+      includeAnalytics: options.includeAnalytics,
     })
   );
 }
@@ -75,6 +78,7 @@ Deno.writeTextFileSync(
   render(Deno.readTextFileSync(options.archiveTemplate), {
     written: posts,
     css: options.css,
+    includeAnalytics: options.includeAnalytics,
   })
 );
 

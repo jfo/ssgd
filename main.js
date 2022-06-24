@@ -59,7 +59,9 @@ for (const { title, date, content, url } of posts
   Deno.writeTextFileSync(
     `${options.outputDir}/${url}/index.html`,
     render(Deno.readTextFileSync(options.rootTemplate), {
-      content: render(content, {}),
+      content: render(content, {
+        img: () => (text) => `<image src="/${text}" />`,
+      }),
       title,
       date,
       css: options.css,

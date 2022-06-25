@@ -3,6 +3,7 @@ import { paramCase, normalCase } from "https://deno.land/x/case/mod.ts";
 import { parse } from "https://deno.land/std/path/mod.ts";
 import { Marked } from "https://deno.land/x/markdown/mod.ts";
 import hljs from "https://jspm.dev/highlight.js";
+import zigHighlighting from "./zig-hl.js";
 import { render } from "https://deno.land/x/mustache_ts/mustache.ts";
 import { format } from "https://deno.land/std@0.91.0/datetime/mod.ts";
 import { copySync } from "https://deno.land/std@0.145.0/fs/copy.ts";
@@ -20,7 +21,10 @@ const options = {
   baseUrl: "https://blog.jfo.click",
 };
 
-const currentlyUnknownLanguages = ["zig", "hex", "wat", "asm"];
+const currentlyUnknownLanguages = ["hex", "wat", "asm"];
+
+hljs.registerLanguage('zig', zigHighlighting);
+
 Marked.setOptions({
   highlight: (code, language) => {
     if (!language || currentlyUnknownLanguages.includes(language)) {

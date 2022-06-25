@@ -17,8 +17,11 @@ const options = {
   rssTemplate: "templates/rss_template.xml",
   css: "style.css",
   includeAnalytics: true,
-  assetHost: "https://assets.jfo.click",
-  baseUrl: "https://blog.jfo.click",
+  // assetHost: "https://assets.jfo.click",
+  // baseUrl: "https://blog.jfo.click",
+  //
+  assetHost: "http://dev.jfo.click:4321",
+  baseUrl: "http://dev.jfo.click:4321",
 };
 
 const currentlyUnknownLanguages = ["hex", "wat", "asm"];

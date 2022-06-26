@@ -11,11 +11,11 @@ const options = {
   rssTemplate: "templates/rss_template.xml",
   css: "style.css",
   includeAnalytics: true,
-  // assetHost: "https://assets.jfo.click",
-  // baseUrl: "https://blog.jfo.click",
-  //
-  assetHost: "http://dev.jfo.click:4321",
-  baseUrl: "http://dev.jfo.click:4321",
+  assetHost: "https://blog.jfo.click",
+  baseUrl: "https://blog.jfo.click",
+  // includeAnalytics: false,
+  // assetHost: "http://dev.jfo.click:4321",
+  // baseUrl: "http://dev.jfo.click:4321",
 };
 
 ensureDirSync(options.outputDir);

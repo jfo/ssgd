@@ -35,9 +35,11 @@ export function compilePosts(options) {
 
     posts.push({
       title,
-      date: `${date.toLocaleString("default", {
-        month: "long",
-      })} ${date.getDate()}, ${date.getFullYear()}`,
+      date: `${
+        date.toLocaleString("default", {
+          month: "long",
+        })
+      } ${date.getDate()}, ${date.getFullYear()}`,
       content: markup.content,
       url,
     });
@@ -55,15 +57,15 @@ export function renderPosts(posts, options) {
       `${options.outputDir}/${url}/index.html`,
       render(Deno.readTextFileSync(options.rootTemplate), {
         content: render(content, {
-          img: () => (text) =>
-            `<image src="${options.assetHost || ""}/${text}" />`,
+          img: () =>
+            (text) => `<image src="${options.assetHost || ""}/${text}" />`,
         }),
         title,
         date,
         css: options.css,
         includeAnalytics: options.includeAnalytics,
         baseUrl: options.baseUrl,
-      })
+      }),
     );
   }
 }
@@ -76,7 +78,7 @@ export function renderArchive(posts, options) {
       css: options.css,
       includeAnalytics: options.includeAnalytics,
       baseUrl: options.baseUrl,
-    })
+    }),
   );
 }
 
@@ -86,6 +88,6 @@ export function renderRss(posts, options) {
     render(Deno.readTextFileSync(options.rssTemplate), {
       items: posts.slice(0, 3),
       now: new Date(),
-    })
+    }),
   );
 }

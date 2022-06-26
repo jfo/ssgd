@@ -1,5 +1,4 @@
-import * as lib from "./lib.js";
-
+import { compilePosts, renderArchive, renderPosts, renderRss } from "./lib.js";
 import { ensureDirSync } from "https://deno.land/std/fs/mod.ts";
 import { copySync } from "https://deno.land/std@0.145.0/fs/copy.ts";
 
@@ -20,9 +19,9 @@ const options = {
 };
 
 ensureDirSync(options.outputDir);
-const posts = lib.compilePosts(options);
-lib.compilePosts(options);
-lib.renderPosts(posts, options);
-lib.renderArchive(posts, options);
-lib.renderRss(posts, options);
+const posts = compilePosts(options);
+compilePosts(options);
+renderPosts(posts, options);
+renderArchive(posts, options);
+renderRss(posts, options);
 copySync(options.staticDir, options.outputDir, { overwrite: true });

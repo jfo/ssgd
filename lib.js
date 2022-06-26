@@ -1,0 +1,93 @@
+import { ensureDirSync, expandGlobSync } from "https://deno.land/std/fs/mod.ts";
+import { paramCase, normalCase } from "https://deno.land/x/case/mod.ts";
+import { parse } from "https://deno.land/std/path/mod.ts";
+import { Marked } from "https://deno.land/x/markdown/mod.ts";
+import hljs from "https://jspm.dev/highlight.js";
+import zigHighlighting from "./zig-hl.js";
+import { render } from "https://deno.land/x/mustache_ts/mustache.ts";
+import { format } from "https://deno.land/std@0.91.0/datetime/mod.ts";
+import { copySync } from "https://deno.land/std@0.145.0/fs/copy.ts";
+
+const currentlyUnknownLanguages = ["hex", "wat", "asm"];
+
+hljs.registerLanguage("zig", zigHighlighting);
+Marked.setOptions({
+  highlight: (code, language) => {
+    if (!language || currentlyUnknownLanguages.includes(language)) {
+      return code;
+    }
+
+    return hljs.highlight(code, { language }).value;
+  },
+});
+
+export function compilePosts(options) {
+  const inputFiles = expandGlobSync(`${options.sourceDir}/**/*.md`);
+  let posts = [];
+
+  for (const file of inputFiles) {
+    const input = Deno.readTextFileSync(file.path);
+    const markup = Marked.parse(input);
+
+    const title = markup?.meta?.title || parse(file.name).name;
+    let date = markup?.meta?.date || "1970-01-01";
+    date = new Date(date);
+
+    const url = markup?.meta?.url || paramCase(title);
+
+    posts.push({
+      title,
+      date: `${date.toLocaleString("default", {
+        month: "long",
+      })} ${date.getDate()}, ${date.getFullYear()}`,
+      content: markup.content,
+      url,
+    });
+  }
+
+  posts = posts.sort((p) => p.date).reverse();
+
+  return posts;
+}
+
+export function renderPosts(posts, options) {
+  for (const { title, date, content, url } of posts) {
+    ensureDirSync(`${options.outputDir}/${url}`);
+    Deno.writeTextFileSync(
+      `${options.outputDir}/${url}/index.html`,
+      render(Deno.readTextFileSync(options.rootTemplate), {
+        content: render(content, {
+          img: () => (text) =>
+            `<image src="${options.assetHost || ""}/${text}" />`,
+        }),
+        title,
+        date,
+        css: options.css,
+        includeAnalytics: options.includeAnalytics,
+        baseUrl: options.baseUrl,
+      })
+    );
+  }
+}
+
+export function renderArchive(posts, options) {
+  Deno.writeTextFileSync(
+    `${options.outputDir}/index.html`,
+    render(Deno.readTextFileSync(options.archiveTemplate), {
+      written: posts,
+      css: options.css,
+      includeAnalytics: options.includeAnalytics,
+      baseUrl: options.baseUrl,
+    })
+  );
+}
+
+export function renderRss(posts, options) {
+  Deno.writeTextFileSync(
+    `${options.outputDir}/feed.xml`,
+    render(Deno.readTextFileSync(options.rssTemplate), {
+      items: posts.slice(0, 3),
+      now: new Date(),
+    })
+  );
+}

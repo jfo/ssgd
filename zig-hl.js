@@ -47,7 +47,7 @@ const ZIG_KEYWORDS = [
   "usingnamespace",
   "var",
   "volatile",
-  "while"
+  "while",
 ].join(" ");
 
 const ZIG_BUILTIN_FUNC = [
@@ -162,12 +162,12 @@ const ZIG_BUILTIN_FUNC = [
   "typeId",
   "typeInfo",
   "typeName",
-  "unionInit"
+  "unionInit",
 ]
-  .map(e => "@" + e)
+  .map((e) => "@" + e)
   .join(" ");
 
-let ZIG_BUILTINS = [
+const ZIG_BUILTINS = [
   "anyerror",
   "anyframe",
   "bool",
@@ -191,7 +191,7 @@ let ZIG_BUILTINS = [
   "noreturn",
   "type",
   "usize",
-  "void"
+  "void",
 ].join(" ");
 
 export default function (hljs) {
@@ -201,39 +201,39 @@ export default function (hljs) {
     keywords: {
       keyword: ZIG_KEYWORDS,
       literal: "true false null undefined",
-      built_in: ZIG_BUILTINS
+      built_in: ZIG_BUILTINS,
     },
     contains: [
       hljs.C_LINE_COMMENT_MODE,
       {
         className: "string",
-        variants: [hljs.QUOTE_STRING_MODE]
+        variants: [hljs.QUOTE_STRING_MODE],
       },
       {
         className: "number",
-        variants: [hljs.C_NUMBER_MODE]
+        variants: [hljs.C_NUMBER_MODE],
       },
       {
         className: "type",
-        begin: /(i|u)(\d{3}|\d{2}|\d{1})/
+        begin: /(i|u)(\d{3}|\d{2}|\d{1})/,
       },
       {
         className: "meta",
         begin: /@\s*[a-zA-Z]+\b/,
         keywords: { "meta-keyword": ZIG_BUILTIN_FUNC },
-        contains: [hljs.QUOTE_STRING_MODE]
+        contains: [hljs.QUOTE_STRING_MODE],
       },
       {
         className: "symbol",
-        begin: /'[a-zA-Z_][a-zA-Z0-9_]*/
+        begin: /'[a-zA-Z_][a-zA-Z0-9_]*/,
       },
       {
         className: "function",
         beginKeywords: "fn",
         end: "(\\()",
         excludeEnd: true,
-        contains: [hljs.TITLE_MODE]
-      }
-    ]
+        contains: [hljs.TITLE_MODE],
+      },
+    ],
   };
-};
+}

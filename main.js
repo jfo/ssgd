@@ -4,7 +4,7 @@ import { copySync } from "https://deno.land/std@0.145.0/fs/copy.ts";
 
 const options = {
   outputDir: "build",
-  sourceDir: "src",
+  sourceDir: "posts",
   staticDir: "static",
   rootTemplate: "templates/root_template.html",
   archiveTemplate: "templates/archive_template.html",

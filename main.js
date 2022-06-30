@@ -14,11 +14,7 @@ const defaultOptions = {
   baseUrl: "http://localhost",
 };
 
-const userOptions = {
-  // includeAnalytics: false,
-  // assetHost: "http://dev.jfo.click",
-  // baseUrl: "http://dev.jfo.click",
-};
+const userOptions = JSON.parse(Deno.readTextFileSync(".blog-config.json"));
 
 const options = {
   ...defaultOptions,

@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.145.0/http/server.ts";
 
-function handler(req, meta) {
+function handler(req, _meta) {
   const host = req.headers.get("host");
 
   const re = new RegExp(`${host}(.*)`);

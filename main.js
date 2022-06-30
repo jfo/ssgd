@@ -6,9 +6,9 @@ const options = {
   outputDir: "build",
   sourceDir: "posts",
   staticDir: "static",
-  rootTemplate: "templates/root_template.html",
-  archiveTemplate: "templates/archive_template.html",
-  rssTemplate: "templates/rss_template.xml",
+  rootTemplate: "templates/root.mustache",
+  archiveTemplate: "templates/archive.mustache",
+  rssTemplate: "templates/rss.mustache",
   css: "style.css",
 
   // includeAnalytics: true,
@@ -26,4 +26,4 @@ renderPosts(posts, options);
 renderArchive(posts, options);
 
 // renderRss(posts, options);
-// copySync(options.staticDir, options.outputDir, { overwrite: true });
+copySync(options.staticDir, options.outputDir, { overwrite: true });

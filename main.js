@@ -10,18 +10,20 @@ const options = {
   archiveTemplate: "templates/archive_template.html",
   rssTemplate: "templates/rss_template.xml",
   css: "style.css",
-  includeAnalytics: true,
-  assetHost: "https://blog.jfo.click",
-  baseUrl: "https://blog.jfo.click",
-  // includeAnalytics: false,
-  // assetHost: "http://dev.jfo.click:4321",
-  // baseUrl: "http://dev.jfo.click:4321",
+
+  // includeAnalytics: true,
+  // assetHost: "https://blog.jfo.click",
+  // baseUrl: "https://blog.jfo.click",
+
+  includeAnalytics: false,
+  assetHost: "http://dev.jfo.click",
+  baseUrl: "http://dev.jfo.click",
 };
 
 ensureDirSync(options.outputDir);
 const posts = compilePosts(options);
-compilePosts(options);
 renderPosts(posts, options);
 renderArchive(posts, options);
-renderRss(posts, options);
-copySync(options.staticDir, options.outputDir, { overwrite: true });
+
+// renderRss(posts, options);
+// copySync(options.staticDir, options.outputDir, { overwrite: true });

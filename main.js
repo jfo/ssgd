@@ -25,5 +25,5 @@ const posts = compilePosts(options);
 renderPosts(posts, options);
 renderArchive(posts, options);
 
-// renderRss(posts, options);
+renderRss(posts, options);
 copySync(options.staticDir, options.outputDir, { overwrite: true });

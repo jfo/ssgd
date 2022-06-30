@@ -6,7 +6,7 @@ const options = {
   outputDir: "build",
   sourceDir: "posts",
   staticDir: "static",
-  rootTemplate: "templates/root.mustache",
+  rootTemplate: "templates/post.mustache",
   archiveTemplate: "templates/archive.mustache",
   rssTemplate: "templates/rss.mustache",
   css: "style.css",

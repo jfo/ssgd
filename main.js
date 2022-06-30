@@ -14,7 +14,10 @@ const defaultOptions = {
   baseUrl: "http://localhost",
 };
 
-const userOptions = JSON.parse(Deno.readTextFileSync(".blog-config.json"));
+let userOptions = {};
+try {
+  userOptions = JSON.parse(Deno.readTextFileSync(".blog-config.json"));
+} catch {}
 
 const options = {
   ...defaultOptions,

@@ -36,10 +36,11 @@ export function compilePosts(options) {
     posts.push({
       title,
       date: `${
-        date.toLocaleString("default", {
-          month: "long",
+        date.toLocaleString("en-US", {
+          month: "short",
+          day: "2-digit",
         })
-      } ${date.getDate()}, ${date.getFullYear()}`,
+      }, ${date.getFullYear()}`,
       content: markup.content,
       url,
     });
@@ -74,7 +75,7 @@ export function renderArchive(posts, options) {
   Deno.writeTextFileSync(
     `${options.outputDir}/index.html`,
     render(Deno.readTextFileSync(options.archiveTemplate), {
-      written: posts,
+      posts,
       css: options.css,
       includeAnalytics: options.includeAnalytics,
       baseUrl: options.baseUrl,

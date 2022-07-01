@@ -17,7 +17,9 @@ const defaultOptions = {
 let userOptions = {};
 try {
   userOptions = JSON.parse(Deno.readTextFileSync(".blog-config.json"));
-} catch {}
+} catch {
+  // TODO: properly handle this
+}
 
 const options = {
   ...defaultOptions,

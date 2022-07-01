@@ -6,7 +6,7 @@ const defaultOptions = {
   outputDir: "build",
   sourceDir: "posts",
   staticDir: "static",
-  rootTemplate: "templates/post.mustache",
+  postTemplate: "templates/post.mustache",
   archiveTemplate: "templates/archive.mustache",
   rssTemplate: "templates/rss.mustache",
   css: "style.css",
@@ -14,12 +14,12 @@ const defaultOptions = {
   baseUrl: "http://localhost",
 };
 
-const USER_CONFIG_PATH = ".blog-config.json"
+const USER_CONFIG_PATH = ".blog-config.json";
 let userOptions = {};
 
 try {
   userOptions = JSON.parse(Deno.readTextFileSync(USER_CONFIG_PATH));
-} catch (err) {
+} catch (_err) {
   // I literally don't care
 }
 

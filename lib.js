@@ -54,18 +54,21 @@ export function compilePosts(options) {
 export function renderPosts(posts, options) {
   for (const { title, date, content, url } of posts) {
     ensureDirSync(`${options.outputDir}/${url}`);
+
+    const renderedContent = render(content, {
+      img: () => (text) => `<image src="${options.assetHost || ""}/${text}" />`,
+    });
+
     Deno.writeTextFileSync(
       `${options.outputDir}/${url}/index.html`,
-      render(Deno.readTextFileSync(options.rootTemplate), {
-        content: render(content, {
-          img: () =>
-            (text) => `<image src="${options.assetHost || ""}/${text}" />`,
-        }),
+      render(Deno.readTextFileSync(options.postTemplate), {
+        content: renderedContent,
         title,
         date,
         css: options.css,
         includeAnalytics: options.includeAnalytics,
         baseUrl: options.baseUrl,
+        url,
       }),
     );
   }

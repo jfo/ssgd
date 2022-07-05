@@ -1,4 +1,5 @@
 import { build } from "./cmd/build.js";
+import { parse } from "https://deno.land/std/flags/mod.ts";
 
 const defaultOptions = {
   outputDir: "build",
@@ -19,6 +20,13 @@ try {
   userOptions = JSON.parse(Deno.readTextFileSync(USER_CONFIG_PATH));
 } catch (_err) {
   // I literally don't care
+}
+
+const args = parse(Deno.args);
+if (args.development || args.dev) {
+  userOptions = userOptions.development;
+} else if (args.production || args.prod) {
+  userOptions = userOptions.development;
 }
 
 const options = {

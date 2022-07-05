@@ -42,6 +42,7 @@ export function compilePosts(options) {
         })
       }, ${date.getFullYear()}`,
       content: markup.content,
+      description: markup.description || `${markup.content.slice(0, 450)}...`,
       url,
     });
   }
@@ -65,10 +66,8 @@ export function renderPosts(posts, options) {
         content: renderedContent,
         title,
         date,
-        css: options.css,
-        includeAnalytics: options.includeAnalytics,
-        baseUrl: options.baseUrl,
         url,
+        ...options,
       }),
     );
   }
@@ -79,9 +78,7 @@ export function renderArchive(posts, options) {
     `${options.outputDir}/index.html`,
     render(Deno.readTextFileSync(options.archiveTemplate), {
       posts,
-      css: options.css,
-      includeAnalytics: options.includeAnalytics,
-      baseUrl: options.baseUrl,
+      ...options,
     }),
   );
 }
@@ -92,6 +89,7 @@ export function renderRss(posts, options) {
     render(Deno.readTextFileSync(options.rssTemplate), {
       items: posts.slice(0, 3),
       now: new Date(),
+      ...options,
     }),
   );
 }

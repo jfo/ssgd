@@ -1,4 +1,9 @@
-import { compilePosts, renderArchive, renderPosts, renderRss } from "../lib.js";
+import {
+  compilePosts,
+  renderArchive,
+  renderPosts,
+  renderRss,
+} from "../lib/index.js";
 import { ensureDirSync } from "https://deno.land/std/fs/mod.ts";
 import { copySync } from "https://deno.land/std@0.145.0/fs/copy.ts";
 

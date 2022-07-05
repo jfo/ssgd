@@ -23,10 +23,10 @@ try {
 }
 
 const args = parse(Deno.args);
-if (args.development || args.dev) {
-  userOptions = userOptions.development;
-} else if (args.production || args.prod) {
-  userOptions = userOptions.development;
+if (args.production || args.prod) {
+  userOptions = userOptions.production;
+} else {
+  userOptions = userOptions.development || userOptions;
 }
 
 const options = {

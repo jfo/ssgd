@@ -1,5 +1,5 @@
 import { build } from "./cmd/build.js";
-import { parse } from "https://deno.land/std/flags/mod.ts";
+// import { parse } from "https://deno.land/std/flags/mod.ts";
 
 const defaultOptions = {
   outputDir: "build",
@@ -22,12 +22,12 @@ try {
   // I literally don't care
 }
 
-const args = parse(Deno.args);
-if (args.production || args.prod) {
-  userOptions = userOptions.production;
-} else {
+// const args = parse(Deno.args);
+// if (args.production || args.prod) {
+//   userOptions = userOptions.production;
+// } else {
   userOptions = userOptions.development || userOptions;
-}
+// }
 
 const options = {
   ...defaultOptions,

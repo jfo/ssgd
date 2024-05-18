@@ -4,8 +4,7 @@ import {
   renderPosts,
   renderRss,
 } from "../lib/index.js";
-import { ensureDirSync } from "https://deno.land/std/fs/mod.ts";
-import { copySync } from "https://deno.land/std@0.145.0/fs/copy.ts";
+import { copySync, ensureDirSync } from "fs-extra";
 
 export function build(options) {
   ensureDirSync(options.outputDir);

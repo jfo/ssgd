@@ -1,5 +1,5 @@
-import { build } from "./cmd/build.js";
-import { parse } from "https://deno.land/std/flags/mod.ts";
+import { build } from "./cmd/build.mjs";
+// import { parse } from "https://deno.land/std/flags/mod.ts";
 
 const defaultOptions = {
   outputDir: "build",
@@ -17,16 +17,9 @@ const USER_CONFIG_PATH = ".blog-config.json";
 let userOptions = {};
 
 try {
-  userOptions = JSON.parse(Deno.readTextFileSync(USER_CONFIG_PATH));
+  // userOptions = JSON.parse(Deno.readTextFileSync(USER_CONFIG_PATH));
 } catch (_err) {
   // I literally don't care
-}
-
-const args = parse(Deno.args);
-if (args.production || args.prod) {
-  userOptions = userOptions.production;
-} else {
-  userOptions = userOptions.development || userOptions;
 }
 
 const options = {

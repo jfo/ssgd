@@ -1,7 +1,7 @@
 import {
   compilePosts,
 //   renderArchive,
-//   renderPosts,
+  renderPosts,
 //   renderRss,
 } from "../lib/index.mjs";
 

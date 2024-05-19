@@ -9,8 +9,8 @@ const defaultOptions = {
   archiveTemplate: "templates/archive.mustache",
   rssTemplate: "templates/rss.mustache.xml",
   css: "style.css",
-  assetHost: "http://localhost",
-  baseUrl: "http://localhost",
+  assetHost: "http://localhost:1234",
+  baseUrl: "http://localhost:1234",
 };
 
 const USER_CONFIG_PATH = ".blog-config.json";

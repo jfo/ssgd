@@ -1,5 +1,5 @@
 import { build } from "./cmd/build.mjs";
-// import { parse } from "https://deno.land/std/flags/mod.ts";
+import { readFileSync } from "node:fs";
 
 const defaultOptions = {
   outputDir: "build",
@@ -17,7 +17,7 @@ const USER_CONFIG_PATH = ".blog-config.json";
 let userOptions = {};
 
 try {
-  // userOptions = JSON.parse(Deno.readTextFileSync(USER_CONFIG_PATH));
+  userOptions = JSON.parse(readFileSync(USER_CONFIG_PATH, "utf-8"));
 } catch (_err) {
   // I literally don't care
 }

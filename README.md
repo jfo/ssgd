@@ -1,6 +1,4 @@
-## Unnamed static site generator in deno.
-
-Process goals: learn about deno learn about typescript
+## Unnamed static site generator
 
 Design goals: YAGNI Incremental complexity depending on need building individual
 posts/pages of arbitrariry complexity, a post could be its own SPA. development

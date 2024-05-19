@@ -21,6 +21,7 @@
     "fs-extra": "^11.2.0",
     "glob": "^10.3.10",
     "graceful-fs": "^4.2.11",
+    "highlight.js": "^11.9.0",
     "install": "^0.13.0",
     "is-fullwidth-code-point": "^3.0.0",
     "isexe": "^2.0.0",

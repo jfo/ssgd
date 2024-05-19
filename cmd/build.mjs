@@ -1,8 +1,8 @@
 import {
   compilePosts,
-    renderArchive,
+  renderArchive,
   renderPosts,
-    renderRss,
+  renderRss,
 } from "../lib/index.mjs";
 
 import { mkdirSync, existsSync, cpSync } from "node:fs";
@@ -14,5 +14,8 @@ export function build(options) {
 
   renderArchive(posts, options);
   renderRss(posts, options);
-  cpSync(options.staticDir, options.outputDir, { force: true, recursive: true });
+  cpSync(options.staticDir, options.outputDir, {
+    force: true,
+    recursive: true,
+  });
 }

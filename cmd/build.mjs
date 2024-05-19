@@ -1,14 +1,14 @@
 import {
   compilePosts,
-//   renderArchive,
+  //   renderArchive,
   renderPosts,
-//   renderRss,
+  //   renderRss,
 } from "../lib/index.mjs";
 
-import { mkdirSync } from "node:fs";
+import { mkdirSync, existsSync } from "node:fs";
 
 export function build(options) {
-  // mkdirSync(options.outputDir);
+  if (!existsSync(options.outputDir)) mkdirSync(options.outputDir);
   const posts = compilePosts(options);
   renderPosts(posts, options);
 

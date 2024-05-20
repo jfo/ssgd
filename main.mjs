@@ -1,5 +1,6 @@
 import { build } from "./cmd/build.mjs";
 import { readFileSync } from "node:fs";
+import arg from "arg";
 
 const defaultOptions = {
   outputDir: "build",
@@ -20,6 +21,16 @@ try {
   userOptions = JSON.parse(readFileSync(USER_CONFIG_PATH, "utf-8"));
 } catch (_err) {
   // I literally don't care
+}
+
+const args = arg({
+  '--prod': Boolean,
+});
+
+if (args['--prod']) {
+  userOptions = userOptions.production;
+} else {
+  userOptions = userOptions.development || userOptions;
 }
 
 const options = {

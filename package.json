@@ -1,0 +1,20 @@
+{
+  "name": "ssgd",
+  "version": "0.0.1",
+  "description": "Simple Static Site Generator",
+  "main": "main.mjs",
+  "dependencies": {
+    "arg": "^5.0.2",
+    "change-case": "^5.4.4",
+    "fs-extra": "^11.2.0",
+    "highlight.js": "^11.9.0",
+    "marked": "^12.0.2",
+    "marked-highlight": "^2.1.1",
+    "mustache": "^4.2.0",
+    "yaml-front-matter": "^4.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jfo/ssgd.git"
+  }
+}
